@@ -12,27 +12,26 @@ mongoose.connect(URI, {dbName: 'dining-in'})
   })
 
 const recipeSchema = new Schema({
-  
   cookTime: {
-    type: String, 
+    type: Number, 
     required: true
   },
-  filters: [String],
+  tag: [String],
   difficulty: {
     type: String,
     required: true
   },
   ingredients: [{
-    item: {
-      type: String,
-      required: true
-    },
     quantity: {
       type: Number,
       required: true
     },
     unit: {
       type: String, 
+      required: true
+    },
+    item: {
+      type: String,
       required: true
     }
   }],

@@ -5,7 +5,7 @@ const URI = process.env.MONGO_URI;
 
 mongoose.connect(URI, {dbName: 'dining-in'})
   .then(() => {
-    console.log('connected to moongodb')
+    console.log('connected to mongodb')
   })
   .catch((err) => {
     console.log(`there was an error connecting to mongodb: ${err}`)
