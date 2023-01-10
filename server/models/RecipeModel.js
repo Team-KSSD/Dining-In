@@ -12,6 +12,14 @@ mongoose.connect(URI, {dbName: 'dining-in'})
   })
 
 const recipeSchema = new Schema({
+  recipeName: {
+    type: String,
+    required: true
+  },
+  author: {
+    type: String, 
+    required: true
+  },
   cookTime: {
     type: Number, 
     required: true
