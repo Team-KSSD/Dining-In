@@ -1,11 +1,10 @@
 import React from "react";
-import NavBar from "./NavBar";
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
   return (
     <div>
-      <NavBar />
       <form action="/user" method="post">
         <h2>Login</h2>
         <div className="input-field">
@@ -16,6 +15,8 @@ const Login = () => {
         </div>
         <input type="submit" value="LogIn" />
     </form>
+    <h2>Don't have an account with us yet?</h2>
+    <Link to={'/signup'}>Sign Up Here</Link>
     </div>
   )
 }
