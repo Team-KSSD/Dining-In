@@ -9,14 +9,16 @@ const recipeController = {};
 recipeController.addRecipe = async (req, res, next) => {
   try {
     // req.body will have the recipe
-    const {details } = req.body;
+    // const {details } = req.body;
   
     const newRecipe = await mongoose.Model.create({
       // add mongoDB document here
+      
     })
   
-    res.locals.newRecipe = newRecipe;
-    console.log('new recipe: ', newRecipe);
+    // res.locals.newRecipe = newRecipe;
+    // console.log('new recipe: ', newRecipe);
+    console.log('new recipe added! ', req.body);
     return next();
 
   } catch(err) {
@@ -49,3 +51,5 @@ recipeController.getRandomRecipe = async (req, res, next) => {
     return next({body: err, msg: 'Unexpected error while trying to retrieve random recipe'})
   }
 }
+
+module.exports = recipeController;
