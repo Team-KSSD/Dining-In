@@ -1,5 +1,37 @@
-import * as React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App.jsx';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import "./public/styles.scss";
+import App from "./App.jsx";
+import Signup from "./components/Signup";
+import AddRecipe from "./components/AddRecipe";
+import GetRecipe from "./components/GetRecipe";
 
-createRoot(document.getElementById('root')).render(<App />);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
+  },
+  {
+    path: "addRecipe",
+    element: <AddRecipe />,
+  },
+  {
+    path: "getRecipe",
+    element: <GetRecipe />,
+  },
+]);
+
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
