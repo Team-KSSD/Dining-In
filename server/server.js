@@ -89,7 +89,7 @@ app.get('/api/recipes', userController.isLoggedIn, recipeController.getAllRecipe
 })
 
 // Get one (random) recipe
-app.get('/api/random', userController.isLoggedIn, (req, res) => {
+app.get('/api/random', userController.isLoggedIn, recipeController.getRandomRecipe, (req, res) => {
   if (res.locals.permission) {
     res.status(200).json(res.locals.random)
   } else {

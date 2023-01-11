@@ -56,16 +56,19 @@ recipeController.getAllRecipes = async (req, res, next) => {
 }
 
 // ---------------- Get a Random Recipe -------------------- //
+
+
 recipeController.getRandomRecipe = async (req, res, next) => {
   try {
     if(res.locals.permission){
-      
-      const allRecipes = await mongoose.Model.find({});
-      const randNum = Math.floor(Math.random() * allRecipes.length);
-      const randomRecipe = allRecipes[randNum];
+      console.log('inside random with permission true')
+      const randomRecipe = await Recipes.aggregate([ { $sample: { size: 1 } } ])
       res.locals.random = randomRecipe;
       return next();  
 
+    } else {
+      console.log('inside random with permission false')
+      return next();
     }
 
   } catch (err) {
