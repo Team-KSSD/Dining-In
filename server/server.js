@@ -55,7 +55,7 @@ app.get('/home', userController.isLoggedIn, (req, res) => {
 app.post('/api/login', userController.verifyUser, (req, res) => {
   console.log(res.locals.currentUser);
   // console.log('response: ', res);
-  res.status(200).send(res.locals.currentUser);
+  res.status(200).send(res.locals.currentUser); 
 })
 
 // Signup

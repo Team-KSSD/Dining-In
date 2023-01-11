@@ -5,53 +5,52 @@ const AddRecipe = () => {
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
-  const [numOfIngredients, setNumOfIngredients] = useState(1);
-  const [numOfSteps, setNumOfSteps] = useState(1);
-  const [ingredients, setIngredients] = useState([]);
-  const [steps, setSteps] = useState([]);
+  const [numOfIngredients, setNumOfIngredients] = useState(2);
+  const [numOfSteps, setNumOfSteps] = useState(2);
 
   //submitting the form and creating a post request
   const submit = (event) => {
     event.preventDefault();
-    createIngredientsList(gettingIngredients);
-    createStepsList(gettingSteps);
+    const ingredients = [];
+    for(let i = 0; i < numOfIngredients; i++) {
+      //currently works when more than one ingredient is put in
+      //need to fix for when there is just one ingredient
+      const nextIngredient = new Ingredient(
+        event.target.quantity[i].value,
+        event.target.unit[i].value,
+        event.target.item[i].value
+      )
+      ingredients.push(nextIngredient);
+    }
+
+    const steps = [];
+    for(let i = 0; i < numOfSteps; i++) {
+      const nextStep = event.target.step[i].value;
+      steps.push(nextStep);
+    }
+
     const recipeToAdd = {
-      recipeName: event.target.recipeName,
-      author: event.target.authore,
-      cookTime: event.target.cookTime, 
-      tag: [...selectedTags],
+      recipeName: event.target.recipeName.value,
+      author: event.target.author.value,
+      cookTime: event.target.cookTime.value, 
+      tag: selectedTags,
       difficulty: selectedDifficulty,
       ingredients: [...ingredients],
       steps: [...steps]
     }
-    // .then(() => {
-    //   fetch('http://localhost:3000/api/addRecipe', {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(recipeToAdd)
-    //   })
-    // })
-    console.log('yay fam we in here doin it')
-    console.log('recipeToAdd', recipeToAdd)
-  }
 
-  //helper function to set ingredients and steps when submit button is pressed
-  const createIngredientsList = (gettingIngredients) => {
-    gettingIngredients.forEach((ingred) => {
-      const nextIngredient = new Ingredient(
-        event.target.gettingIngredients.quantity, 
-        event.target.gettingIngredients.unit, 
-        event.target.gettingIngredients.item
-      )
-      setIngredients(...ingredients, nextIngredient)
+    fetch('/api/addRecipe', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(recipeToAdd)
     })
-  }
-
-  const createStepsList = (gettingSteps) => {
-    gettingSteps.forEach((step) => {
-      setSteps([...steps, event.target.gettingSteps.value]);
+    .then(() => {
+      alert('Your recipe has been submitted! Thanks for your contribution :)')
+    })
+    .then(() => {
+      window.location.reload();
     })
   }
 
@@ -65,13 +64,13 @@ const AddRecipe = () => {
     setSelectedTags(currentSelectedTags);
   }
   
-  const currentSelectedTags = [];
+  let currentSelectedTags = [];
   const tagOptions = ['Gluten Free', 'Vegetarian', 'Vegan', 'Family Secret']
   const tags = [];
   tagOptions.forEach((tag) => {
     tags.push(
       <div>
-        <label><input value={tag} key={tag} type="checkbox" onChange={handleCheck}/><span>{tag}</span></label> //both span and label necessary?
+        <label><input value={tag} key={tag} type="checkbox" onChange={handleCheck}/><span>{tag}</span></label>
       </div>
     )
   })
@@ -100,7 +99,7 @@ const AddRecipe = () => {
     }
   }
 
-  const gettingIngredients = []
+  let gettingIngredients = []
   for(let i = 0; i < numOfIngredients; i++) {
     gettingIngredients.push(
       <div>
@@ -115,7 +114,10 @@ const AddRecipe = () => {
   const gettingSteps = [];
   for(let i = 0; i < numOfSteps; i++) {
     gettingSteps.push(
-      <input type="text" id={`Step ${i+1}`} placeholder={`Enter info for step #${i+1}`} required></input>
+      <div>
+        <input type="text" id="step" placeholder={`Enter info for step #${i+1}`} required></input>
+        <br></br>
+      </div>
     )
   }
 
@@ -131,9 +133,10 @@ const AddRecipe = () => {
         {tags}
         <h4>Select the difficulty level</h4>
         {difficulty}
-        {ingredients}
+        {gettingIngredients}
         <button type="button" onClick={() => {setNumOfIngredients(numOfIngredients + 1)}}>Click here to add another ingredient</button>
-        {steps}
+        //steps
+        {gettingSteps}
         <button type="button" onClick={() => {setNumOfSteps(numOfSteps + 1)}}>Click here to add another step</button>
         <input type="submit" value="Submit!"></input>
       </form>

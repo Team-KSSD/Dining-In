@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 //custom hook for handling inputs
 const useInput = init => {
@@ -12,6 +12,8 @@ const useInput = init => {
 
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
   const [username, usernameOnChange] = useInput('');
   const [password, passwordOnChange] = useInput('');
@@ -33,13 +35,12 @@ const Login = () => {
     })
       .then(response => response.json())
       .then((parsedResponse) => {
-        // console.log('parsed response in login', parsedResponse);
-        // if (parsedResponse === false) {
-        //   alert('Sorry that username or password is incorrect, please try again.')
-        // } else {
-          alert('logged in')
-          return redirect("/home");
-        // }
+        console.log('parsed response in login', parsedResponse);
+        if (parsedResponse === false) {
+          alert('Sorry that username or password is incorrect, please try again.')
+        } else {
+          return navigate("/home");
+        }
       })
       .catch(err => console.log('Error logging in, ERROR: ', err));
   }

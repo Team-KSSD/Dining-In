@@ -13,7 +13,8 @@ const Home = () => {
         <Link className="homeLink" to={'/addRecipe'}>Add a recipe</Link>
         </button>
         <h1>or</h1>
-        <button><Link className="homeLink" to={'/getRecipe'}>Get a recipe?</Link></button>
+        <button><Link className="homeLink" to={'/getRecipe'}>Get a recipe</Link></button>
+        <h1>?</h1>
       </div>
     </div>
   )
