@@ -100,12 +100,14 @@ const AddRecipe = () => {
   }
 
   let gettingIngredients = []
+  const fakeIngredients = ['meat', 'sour cream', 'flour', 'cheerios', 'peanut butter', 'avocados', 'bread', 'cucumber', 'salt', 'oregano']
+  const fakeUnits = ['cups', 'tsp', 'tb', 'dash', 'gallons', 'liters', 'hand fulls', 'spritzes', 'milliliters', 'packed cups']
   for(let i = 0; i < numOfIngredients; i++) {
     gettingIngredients.push(
       <div>
-        <input type="text" id="quantity" placeholder="Enter the quantity of this ingredient" required></input>;
-        <input type="text" id="unit" placeholder="Enter the unit for this ingredient" required></input>;
-        <input type="text" id="item" placeholder="Enter the name of this ingredient" required></input>;
+        <input type="text" id="quantity" placeholder={`Quantity (ex: ${Math.floor(Math.random()*10)})`} required></input>;
+        <input type="text" id="unit" placeholder={`Unit (ex: ${fakeUnits[Math.floor(Math.random()*10)]})`} required></input>;
+        <input type="text" id="item" placeholder={`Name (ex: ${fakeIngredients[Math.floor(Math.random()*10)]})`} required></input>;
       </div>
     )
   }
@@ -115,7 +117,7 @@ const AddRecipe = () => {
   for(let i = 0; i < numOfSteps; i++) {
     gettingSteps.push(
       <div>
-        <input type="text" id="step" placeholder={`Enter info for step #${i+1}`} required></input>
+        <input type="text" id="step" placeholder={`Step #${i+1}`} required></input>
         <br></br>
       </div>
     )
@@ -124,22 +126,26 @@ const AddRecipe = () => {
   return (
     <div>
       <NavBar />
-      <h2>Add your recipe!</h2>
-      <form onSubmit={submit}>
-        <input type="text" id="recipeName" placeholder="Enter the recipe name" required></input><br></br>
-        <input type="text" id="author" placeholder="Enter your name" required></input><br></br>
-        <input type="number" id="cookTime" placeholder="Enter the approximate total cook time in minutes" required></input><br></br>
-        <h4>Select all of the following that apply</h4>
-        {tags}
-        <h4>Select the difficulty level</h4>
-        {difficulty}
-        {gettingIngredients}
-        <button type="button" onClick={() => {setNumOfIngredients(numOfIngredients + 1)}}>Click here to add another ingredient</button>
-        //steps
-        {gettingSteps}
-        <button type="button" onClick={() => {setNumOfSteps(numOfSteps + 1)}}>Click here to add another step</button>
-        <input type="submit" value="Submit!"></input>
-      </form>
+      <div className="addRecipe">
+        <h2>Thanks for adding a recipe for our community!</h2>
+        <form onSubmit={submit}>
+          <h4 className="header">The basics</h4>
+          <input type="text" id="recipeName" placeholder="Recipe name" required></input><br></br>
+          <input type="text" id="author" placeholder="Your name" required></input><br></br>
+          <input type="number" id="cookTime" placeholder="Total cook time (mins)" required></input><br></br>
+          <h4 className="header">Select all of the following that apply</h4>
+          {tags}
+          <h4 className="header">Select the difficulty level</h4>
+          {difficulty}
+          <h4 className="header">Enter the ingredients for your dish</h4>
+          {gettingIngredients}
+          <button type="button" onClick={() => {setNumOfIngredients(numOfIngredients + 1)}}>Add another ingredient</button>
+          <h4 className="header" id="stepsHeader">Enter the steps to create your dish</h4>
+          {gettingSteps}
+          <button type="button" onClick={() => {setNumOfSteps(numOfSteps + 1)}}>Add another step</button><br></br>
+          <input className="submitButton" type="submit" value="Submit!"></input>
+        </form>
+      </div>
     </div>
   )
 }
