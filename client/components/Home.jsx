@@ -7,10 +7,14 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <h1>Would you like to</h1>
-      <Link to={'/addRecipe'}>Add a recipe</Link>
-      <h2>or</h2>
-      <Link to={'/getRecipe'}>Get a recipe?</Link>
+      <div className="home">
+        <h1>Would you like to</h1>
+        <button>
+        <Link className="homeLink" to={'/addRecipe'}>Add a recipe</Link>
+        </button>
+        <h1>or</h1>
+        <button><Link className="homeLink" to={'/getRecipe'}>Get a recipe?</Link></button>
+      </div>
     </div>
   )
 }

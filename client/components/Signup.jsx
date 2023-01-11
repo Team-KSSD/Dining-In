@@ -54,7 +54,7 @@ const Signup = () => {
         <input type="submit" value="Sign Up" onClick={handleSubmit} />
       </form>
   <h3>Already have an account with us?</h3>
-  <Link to={'/'}>Login Here</Link>
+  <Link className="loginLink" to={'/'}>Login Here</Link>
   </div>
   )
 }
