@@ -17,7 +17,7 @@ userController.addUser = async (req, res, next) => {
     try {
         const {username, password} = req.body;
         const addNew = await Users.create({username: username, password: password});
-        console.log('User added? addNew', addNew)
+        // console.log('User added? addNew', addNew)
         res.locals.newUser = addNew;
         return next();
         
@@ -30,11 +30,11 @@ userController.addUser = async (req, res, next) => {
 
 userController.verifyUser = async (req, res, next) => {
   const {username, password} = req.body;
-  console.log('req.body', req.body)
-  console.log('inside verify user, is there a session key?', req.session)
+  // console.log('req.body', req.body)
+  // console.log('inside verify user, is there a session key?', req.session)
   try {
     const findUser = await Users.findOne({username: username, password: password});
-    console.log('found User?', findUser);
+    // console.log('found User?', findUser);
     if (findUser) {
         res.locals.currentUser = findUser;
         session=req.session;

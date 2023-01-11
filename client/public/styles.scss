@@ -12,6 +12,17 @@ body {
   background-color: #347474;
   color: white;
   margin: 0px;
+  font-family: 'Courier New', Courier, monospace;
+  
+  button {
+    background-color: #347474;
+    cursor: pointer;
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    padding: 0;
+    width: 80px;
+  }
 }
 .navLink {
   color: white;
@@ -158,4 +169,27 @@ button {
   color: white;
   background-color: #347474;
   text-decoration: none;
+}
+
+#addReview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+#addReview > * {
+  margin: .5rem;
+}
+
+.review-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 300px;
+  padding: 1rem;
+
+  border: 1px solid darkgreen;
+  border-radius: 5%;
 }

@@ -63,11 +63,14 @@ app.post('/api/signup', userController.addUser, (req, res) => {
   res.status(200).json(res.locals.newUser);
 })
 
-app.get('/logout', (req,res) => {
+// Logout
+app.get('/api/logout', (req,res) => {
     // console.log("body and session", req.body, req.session);
+    console.log("req in loggout before destroy", req.session)
     req.session.destroy();
     console.log("you've been logged out?!")
-    res.redirect('/');
+    console.log(req.session)
+    // res.redirect('/');
     // return next();
 });
 
@@ -87,7 +90,14 @@ app.get('/api/recipes', userController.isLoggedIn, recipeController.getAllRecipe
     res.redirect('/');
   }
 })
-
+// Get one specific recipe
+app.get('/api/recipes/:id', userController.isLoggedIn, recipeController.getRandomRecipe, (req, res) => {
+  if (res.locals.permission) {
+    res.status(200).json(res.locals.recipe)
+  } else {
+    res.redirect('/');
+  }
+})
 // Get one (random) recipe
 app.get('/api/random', userController.isLoggedIn, recipeController.getRandomRecipe, (req, res) => {
   if (res.locals.permission) {
