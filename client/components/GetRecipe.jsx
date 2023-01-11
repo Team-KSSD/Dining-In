@@ -7,12 +7,13 @@ const GetRecipe = () => {
 
   useEffect(() => {
     fetchRecipe();
-  });
+  }, []);
 
   const fetchRecipe = () => {
-    fetch('http://localhost:8080/api/random')
+    fetch('/api/random')
       .then(rec => rec.json())
       .then((parsedRecipe) => {
+        console.log('parsed recipe in get recipe.jsx', parsedRecipe)
         setRecipe(parsedRecipe);
       })
       .catch(err => console.log('Error fetching random recipe, ERROR: ', err));
@@ -20,17 +21,18 @@ const GetRecipe = () => {
 
   //get tags and format then push them to an array for display on the page
   const tagsArray = [];
-  if (recipe.tags >= 1) {
-    for (let i = 0; i < recipe.tags.length; i++) {
-      tagsArray.push(<span>recipe.tags[i]</span>);
-    }
+  if (recipe.tag) {
+    recipe.tag.forEach((element) => {
+      tagsArray.push(<span>{element}</span>);
+    })
   }
 
   //maps the ingredients for display on the page
   const ingredientsArray = [];
   if (recipe.ingredients) {
     recipe.ingredients.forEach((ingred) => {
-      ingredientsArray.push(<li>{ingred[item]}: {ingred[quantity]} {ingred[unit]}</li>)
+      ingredientsArray.push(<li>{ingred.item}: {ingred.quantity} {ingred.unit}</li>)
+      console.log('ingred', ingred);
     });
   }
 

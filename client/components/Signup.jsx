@@ -22,9 +22,8 @@ const Signup = () => {
       username: username,
       password: password
     };
-    //FIX PATH BELOW!!!
-    fetch('http://localhost:8080/api/???', {
-      method: POST,
+    fetch('/api/signup', {
+      method: 'POST',
       headers: {
         'Content-Type': 'Application/JSON'
       },
@@ -32,10 +31,11 @@ const Signup = () => {
     })
       .then(response => response.json())
       .then((parsedResponse) => {
-        if (parsedResponse.newUser === false) {
-          alert('Sorry that username or password is incorrect, please try again.')
+        console.log('parsed response in signup.jsx', parsedResponse);
+        if (parsedResponse === false) {
+          alert('Sign up credentials incorrect, please try again.');
         } else {
-          return redirect("/home")
+          return redirect("/login")
         }
       })
       .catch(err => console.log('Error adding new user, ERROR: ', err));

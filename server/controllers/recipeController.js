@@ -63,7 +63,7 @@ recipeController.getRandomRecipe = async (req, res, next) => {
     if(res.locals.permission){
       console.log('inside random with permission true')
       const randomRecipe = await Recipes.aggregate([ { $sample: { size: 1 } } ])
-      res.locals.random = randomRecipe;
+      res.locals.random = randomRecipe[0];
       return next();  
 
     } else {
