@@ -13,6 +13,8 @@ const AddRecipe = () => {
     event.preventDefault();
     const ingredients = [];
     for(let i = 0; i < numOfIngredients; i++) {
+      //currently works when more than one ingredient is put in
+      //need to fix for when there is just one ingredient
       const nextIngredient = new Ingredient(
         event.target.quantity[i].value,
         event.target.unit[i].value,
