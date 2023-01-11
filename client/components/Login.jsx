@@ -23,9 +23,9 @@ const Login = () => {
       username: username,
       password: password
     };
-    //FIX PATH BELOW!!!
-    fetch('http://localhost:8080/api/???', {
-      method: POST,
+    console.log('current user', currentUser);
+    fetch('/api/login', {
+      method: 'POST',
       headers: {
         'Content-Type': 'Application/JSON'
       },
@@ -33,11 +33,13 @@ const Login = () => {
     })
       .then(response => response.json())
       .then((parsedResponse) => {
-        if (parsedResponse.currentUser === false) {
-          alert('Sorry that username or password is incorrect, please try again.')
-        } else {
-          return redirect("/home")
-        }
+        // console.log('parsed response in login', parsedResponse);
+        // if (parsedResponse === false) {
+        //   alert('Sorry that username or password is incorrect, please try again.')
+        // } else {
+          alert('logged in')
+          return redirect("/home");
+        // }
       })
       .catch(err => console.log('Error logging in, ERROR: ', err));
   }
@@ -54,8 +56,8 @@ const Login = () => {
         </div>
         <input type="submit" value="LogIn" onClick={handleSubmit} />
       </form>
-      <h2>Don't have an account with us yet?</h2>
-      <Link to={'/signup'}>Sign Up Here</Link>
+      <h3>Don't have an account with us yet?</h3>
+      <Link className="loginLink" to={'/signup'}>Sign Up Here</Link>
     </div>
   )
 }
