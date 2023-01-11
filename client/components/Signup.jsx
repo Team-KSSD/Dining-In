@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 //custom hook for handling inputs
 const useInput = init => {
@@ -11,6 +11,8 @@ const useInput = init => {
 };
 
 const Signup = () => {
+
+  const navigate = useNavigate();
 
   const [username, usernameOnChange] = useInput('');
   const [password, passwordOnChange] = useInput('');
@@ -35,7 +37,7 @@ const Signup = () => {
         if (parsedResponse === false) {
           alert('Sign up credentials incorrect, please try again.');
         } else {
-          return redirect("/login")
+          return navigate("/home");
         }
       })
       .catch(err => console.log('Error adding new user, ERROR: ', err));
