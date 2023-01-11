@@ -1,7 +1,116 @@
 body {
-  background-color: purple
+  background-color: #C7ECCB;
+  margin: 0;
+  margin-bottom: 70px;
 }
 
-h1 {
-  color: red
+//NAV BAR //
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #347474;
+  margin: 0px;
+}
+
+//GET RECIPE //
+.getRecipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .recipeCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 6px;
+    width: 400px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+
+  button {
+    height: 40px;
+    width: 150px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    background-color: #347474;
+    margin-bottom: 30px;
+  }
+}
+
+//SIGN UP//
+.signup {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-field {
+    position: relative;
+    // margin-top: 2rem;
+  }
+  
+  .input-field input {
+    padding: 0.8rem;
+  }
+  
+  form .input-field:first-child {
+    margin-bottom: 1.5rem;
+  }
+  
+  form input[type="submit"] {
+    background-color: #347474;
+    color: white;
+    border-radius: 4px;
+    margin-top: 2rem;
+    padding: 0.4rem;
+  }
+}
+
+
+//LOGIN //
+.login {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-field {
+    position: relative;
+    // margin-top: 2rem;
+  }
+  
+  .input-field input {
+    padding: 0.8rem;
+  }
+  
+  form .input-field:first-child {
+    margin-bottom: 1.5rem;
+  }
+  
+  form input[type="submit"] {
+    background-color: #347474;
+    color: white;
+    border-radius: 4px;
+    margin-top: 2rem;
+    padding: 0.4rem;
+  }
 }
