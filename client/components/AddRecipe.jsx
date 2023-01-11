@@ -5,8 +5,8 @@ const AddRecipe = () => {
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState('');
-  const [numOfIngredients, setNumOfIngredients] = useState(1);
-  const [numOfSteps, setNumOfSteps] = useState(1);
+  const [numOfIngredients, setNumOfIngredients] = useState(2);
+  const [numOfSteps, setNumOfSteps] = useState(2);
 
   //submitting the form and creating a post request
   const submit = (event) => {
@@ -26,7 +26,6 @@ const AddRecipe = () => {
     const steps = [];
     for(let i = 0; i < numOfSteps; i++) {
       const nextStep = event.target.step[i].value;
-      console.log(nextStep);
       steps.push(nextStep);
     }
 
@@ -39,17 +38,20 @@ const AddRecipe = () => {
       ingredients: [...ingredients],
       steps: [...steps]
     }
-    // .then(() => {
-    //   fetch('http://localhost:3000/api/addRecipe', {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(recipeToAdd)
-    //   })
-    // })
-    console.log('yay fam we in here doin it')
-    console.log('recipeToAdd', recipeToAdd)
+
+    fetch('/api/addRecipe', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(recipeToAdd)
+    })
+    .then(() => {
+      alert('Your recipe has been submitted! Thanks for your contribution :)')
+    })
+    .then(() => {
+      window.location.reload();
+    })
   }
 
   //selecting the tags
