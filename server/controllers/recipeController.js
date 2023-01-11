@@ -1,5 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const Recipes = require('../models/RecipeModel');
 
 // IMPORT RECIPE MODEL HERE
 
@@ -8,19 +9,28 @@ const recipeController = {};
 // ------------------ Add a New Recipe --------------------- //
 recipeController.addRecipe = async (req, res, next) => {
   try {
-    // req.body will have the recipe
-    // const {details } = req.body;
+    if(res.locals.permission) {
+      console.log('add recipe permission is true')
+      // req.body will have the recipe
+      const { recipeName, author, cookTime, tag, difficulty, ingredients, steps } = req.body;
+    
+      const createRecipe = await Recipes.create({
+        recipeName: recipeName,
+        author: author,
+        cookTime: cookTime,
+        tag: tag,
+        difficulty: difficulty,
+        ingredients: ingredients,
+        steps: steps
+      })
   
-    const newRecipe = await mongoose.Model.create({
-      // add mongoDB document here
-      
-    })
-  
-    // res.locals.newRecipe = newRecipe;
-    // console.log('new recipe: ', newRecipe);
-    console.log('new recipe added! ', req.body);
-    return next();
-
+      res.locals.newRecipe = createRecipe;
+      console.log('new recipe: ', createRecipe);
+      return next();
+    } else {
+      console.log('add recipe permission is false')
+      return next();
+    }
   } catch(err) {
     return next({body: err, msg: 'Unexpected error while trying to add a recipe'})
   }
@@ -30,22 +40,36 @@ recipeController.addRecipe = async (req, res, next) => {
 // ------------------- Get All Recipes --------------------- //
 recipeController.getAllRecipes = async (req, res, next) => {
   try {
-    const allRecipes = await mongoose.Model.find({});
-    res.locals.recipes = allRecipes;
-    return next();
+    if(res.locals.permission) {
+      console.log('inside getallrecipes with permission true')
+      const allRecipes = await Recipes.find();
+      res.locals.recipes = allRecipes;
+      console.log('inside getallrecipes locals.recipes', res.locals.recipes)
+      return next();
+    } else {
+      console.log('inside getallrecipes with permission false');
+      return next();
+    }
   } catch (err) {
     return next({body: err, msg: 'Unexpected error while trying to retrieve all recipes'})
   }
 }
 
 // ---------------- Get a Random Recipe -------------------- //
+
+
 recipeController.getRandomRecipe = async (req, res, next) => {
   try {
-    const allRecipes = await mongoose.Model.find({});
-    const randNum = Math.floor(Math.random() * allRecipes.length);
-    const randomRecipe = allRecipes[randNum];
-    res.locals.random = randomRecipe;
-    return next();  
+    if(res.locals.permission){
+      console.log('inside random with permission true')
+      const randomRecipe = await Recipes.aggregate([ { $sample: { size: 1 } } ])
+      res.locals.random = randomRecipe;
+      return next();  
+
+    } else {
+      console.log('inside random with permission false')
+      return next();
+    }
 
   } catch (err) {
     return next({body: err, msg: 'Unexpected error while trying to retrieve random recipe'})
