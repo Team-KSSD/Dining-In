@@ -46,6 +46,16 @@ const recipeSchema = new Schema({
   steps: [{
     type: String,
     required: true
+  }],
+  reviews: [{
+    body: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
   }]
 })
 

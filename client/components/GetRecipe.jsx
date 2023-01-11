@@ -4,6 +4,9 @@ import NavBar from "./NavBar";
 const GetRecipe = () => {
 
   const [recipe, setRecipe] = useState({});
+  const [review, setReview] = useState('');
+  const [reviewsList, setReviewList] = useState([]);
+  const [reviewAuthor, setReviewAuthor] = useState('');
 
   useEffect(() => {
     fetchRecipe();
@@ -44,6 +47,32 @@ const GetRecipe = () => {
     });
   }
 
+  const updateReview = (e) => {
+    setReview(e.target.value);
+    console.log(review)
+  }
+
+  const submitReview = (e) => {
+    e.preventDefault();
+    setReview(e.target.)
+    const body = {
+      review: review,
+      name: reviewAuthor,
+      id: recipe.id
+    }
+    fetch('/api/addReview', {
+      method: 'POST',
+      headers: {'type': 'application/json'},
+      body: JSON.stringify(body)
+    })
+  }
+
+  const getReviews = () => {
+    fetch('/api/reviews');
+
+  }
+
+  
   return (
     <div>
       <NavBar />
@@ -64,6 +93,15 @@ const GetRecipe = () => {
         <ol>
           {stepsArray}
         </ol>
+      </div>
+      <h3>Add A Review!</h3>
+      <form action="">
+        <textarea name="" id="reviewInput" cols="30" rows="10" onInput={(e) => updateReview(e)}></textarea>
+        <input type="text" id="reviewAuthor" placeholder="Add your name to your review"/>
+        <button onClick={submitReview}>Submit Review</button>
+      </form>
+      <div className="review-container">
+        {/* {reviewList} */}
       </div>
     </div>
     </div>

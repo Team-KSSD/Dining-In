@@ -18,6 +18,16 @@ body {
   text-decoration: none;
 }
 
+button {
+  height: 40px;
+  width: 150px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  background-color: #347474;
+  margin-bottom: 30px;
+}
+
 //GET RECIPE //
 .getRecipe {
   display: flex;

@@ -122,18 +122,17 @@ const AddRecipe = () => {
   return (
     <div>
       <NavBar />
-      <h2>This is the add recipe page</h2>
+      <h2>Add your recipe!</h2>
       <form onSubmit={submit}>
-        <input type="text" id="recipeName" placeholder="Enter the recipe name" required></input>
-        <input type="text" id="author" placeholder="Enter your name" required></input>
-        <input type="number" id="cookTime" placeholder="Enter the approximate total cook time in minutes" required></input>
+        <input type="text" id="recipeName" placeholder="Enter the recipe name" required></input><br></br>
+        <input type="text" id="author" placeholder="Enter your name" required></input><br></br>
+        <input type="number" id="cookTime" placeholder="Enter the approximate total cook time in minutes" required></input><br></br>
         <h4>Select all of the following that apply</h4>
         {tags}
         <h4>Select the difficulty level</h4>
         {difficulty}
         {ingredients}
         <button type="button" onClick={() => {setNumOfIngredients(numOfIngredients + 1)}}>Click here to add another ingredient</button>
-        //steps
         {steps}
         <button type="button" onClick={() => {setNumOfSteps(numOfSteps + 1)}}>Click here to add another step</button>
         <input type="submit" value="Submit!"></input>

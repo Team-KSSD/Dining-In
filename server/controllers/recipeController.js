@@ -12,7 +12,7 @@ recipeController.addRecipe = async (req, res, next) => {
     if(res.locals.permission) {
       console.log('add recipe permission is true')
       // req.body will have the recipe
-      const { recipeName, author, cookTime, tag, difficulty, ingredients, steps } = req.body;
+      const { recipeName, author, cookTime, tag, difficulty, ingredients, steps, reviews } = req.body;
     
       const createRecipe = await Recipes.create({
         recipeName: recipeName,
@@ -21,7 +21,8 @@ recipeController.addRecipe = async (req, res, next) => {
         tag: tag,
         difficulty: difficulty,
         ingredients: ingredients,
-        steps: steps
+        steps: steps,
+        reviews: reviews
       })
   
       res.locals.newRecipe = createRecipe;
@@ -34,7 +35,18 @@ recipeController.addRecipe = async (req, res, next) => {
   } catch(err) {
     return next({body: err, msg: 'Unexpected error while trying to add a recipe'})
   }
+}
 
+recipeController.addReview = async (req, res, next) => {
+  const {body, id} = req.body;
+  console.log('review body');
+  try {
+    Recipes.updateOne({_id: id}, {
+      $push: {reviews: body}
+    })
+  } catch(err) {
+    return next({body: err, msg: 'Unexpected error while trying to add a review'})
+  }
 }
 
 // ------------------- Get All Recipes --------------------- //

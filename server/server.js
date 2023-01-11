@@ -106,6 +106,15 @@ app.post('/api/addRecipe', userController.isLoggedIn, recipeController.addRecipe
   }
 })
 
+// Add a new review
+app.post('/api/addReview', userController.isLoggedIn, recipeController.addReview, (req, res) => {
+  if (res.locals.permission) {
+    res.status(200).send('New review added!');
+  } else {
+    res.redirect('/');
+  }
+})
+
 //------------------------------------------------------------------ //
 
 // ----------------------- Global Endpoints ------------------------ //
