@@ -30,6 +30,7 @@ userController.addUser = async (req, res, next) => {
 
 userController.verifyUser = async (req, res, next) => {
   const {username, password} = req.body;
+  console.log('req.body', req.body)
   console.log('inside verify user, is there a session key?', req.session)
   try {
     const findUser = await Users.findOne({username: username, password: password});
