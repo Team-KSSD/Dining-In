@@ -22,6 +22,7 @@ userController.addUser = async (req, res, next) => {
         return next();
         
     } catch(err) {
+        res.locals.newUser = false;
         return next({error: err, msg: 'Unexpected error while trying to add a user'})
     }
 }
@@ -42,7 +43,6 @@ userController.verifyUser = async (req, res, next) => {
         res.locals.currentUser = false;
     }
     return next();
-
   } catch(err) {
     return next({error: err, msg: 'Unexpected error while trying to verify a user'})
   }
@@ -55,10 +55,9 @@ userController.verifyUser = async (req, res, next) => {
 // else{
 //     res.send('Invalid username or password');
 // }
-
 }
 
-userController.isLoggedIn =(req, res, next) => {
+userController.isLoggedIn = (req, res, next) => {
     session=req.session;
     if(session.userid){
         res.locals.permission = true;
@@ -66,7 +65,7 @@ userController.isLoggedIn =(req, res, next) => {
         return next();
     }else{
     //   res.sendFile('views/index.html',{root:__dirname})
-    res.locals.permission = false;
+      res.locals.permission = false;
       return next();
     }
 }

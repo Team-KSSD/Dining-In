@@ -11,6 +11,7 @@ express.static(path.resolve(__dirname, '../public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser()) // Need to pass in a cookie secret
+
 //session middleware
 app.use(sessions({
   secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
@@ -53,6 +54,7 @@ app.get('/home', userController.isLoggedIn, (req, res) => {
 // Login
 app.post('/api/login', userController.verifyUser, (req, res) => {
   console.log(res.locals.currentUser);
+  // console.log('response: ', res);
   res.status(200).send(res.locals.currentUser);
 })
 
@@ -61,11 +63,15 @@ app.post('/api/signup', userController.addUser, (req, res) => {
   res.status(200).json(res.locals.newUser);
 })
 
-
+app.get('/logout', (req,res) => {
+    // console.log("body and session", req.body, req.session);
+    req.session.destroy();
+    console.log("you've been logged out?!")
+    res.redirect('/');
+    // return next();
+});
 
 //////sam add
-
-
 
 ////sam end
 
@@ -74,18 +80,30 @@ app.post('/api/signup', userController.addUser, (req, res) => {
 // ----------------------- Recipe Endpoints ------------------------ //
 
 // Get all recipes
-app.get('/api/recipes', (req, res) => {
-  res.status(200).json(res.locals.recipes)
+app.get('/api/recipes', userController.isLoggedIn, recipeController.getAllRecipes, (req, res) => {
+  if (res.locals.permission) {
+    res.status(200).json(res.locals.recipes)
+  } else {
+    res.redirect('/');
+  }
 })
 
 // Get one (random) recipe
-app.get('/api/random', (req, res) => {
-  res.status(200).json(res.locals.random)
+app.get('/api/random', userController.isLoggedIn, (req, res) => {
+  if (res.locals.permission) {
+    res.status(200).json(res.locals.random)
+  } else {
+    res.redirect('/');
+  }
 })
 
 // Add a new recipe
-app.post('/api/addRecipe', recipeController.addRecipe, (req, res) => {
-  res.status(200).send('New recipe added!');
+app.post('/api/addRecipe', userController.isLoggedIn, recipeController.addRecipe, (req, res) => {
+  if (res.locals.permission) {
+    res.status(200).send('New recipe added!');
+  } else {
+    res.redirect('/');
+  }
 })
 
 //------------------------------------------------------------------ //
