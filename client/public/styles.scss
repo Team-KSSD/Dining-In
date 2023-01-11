@@ -2,6 +2,7 @@ body {
   background-color: #C7ECCB;
   margin: 0;
   margin-bottom: 70px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 //NAV BAR //
@@ -18,8 +19,39 @@ body {
   text-decoration: none;
 }
 
-//GET RECIPE //
-.getRecipe {
+.header {
+  margin-bottom: 0;
+  margin-top: 2em;
+}
+
+#stepsHeader{
+  margin-top: 0;
+}
+
+#step{
+  width: 100%;
+}
+
+//buttons
+button, .submitButton {
+  height: 40px;
+  width: 150px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  background-color: #347474;
+  margin-bottom: 30px;
+  font-size: 1em;
+}
+
+.submitButton {
+  font-size: 1.5em;
+  font-weight: 800;
+  background-color: #8B8989;
+}
+
+//GET RECIPE and ADD RECIPE //
+.getRecipe, .addRecipe {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,16 +70,6 @@ body {
   }
   h3 {
     font-size: 16px;
-  }
-
-  button {
-    height: 40px;
-    width: 150px;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    background-color: #347474;
-    margin-bottom: 30px;
   }
 }
 
