@@ -9,6 +9,7 @@ import App from "./App.jsx";
 import Signup from "./components/Signup";
 import AddRecipe from "./components/AddRecipe";
 import GetRecipe from "./components/GetRecipe";
+import Home from "./components/Home";
 
 const router = createBrowserRouter([
   {
