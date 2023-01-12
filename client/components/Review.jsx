@@ -5,10 +5,9 @@ const Review = ({review}) => {
 
   return (
     <div className="review-item">
-      <h4>Review: </h4>
-      <p>{review.body}</p>
-      <h4>From:</h4>
-      <p>{review.name}</p>
+      {/* <h4>Review: </h4> */}
+      <p className="review-body">{review.body}</p>
+      <p className="review-name">- {review.name}</p>
     </div>
   )
 }

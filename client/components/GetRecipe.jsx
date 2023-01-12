@@ -11,8 +11,6 @@ const GetRecipe = () => {
 
   useEffect(() => {
     fetchRecipe();
-    // getReviews();
-    console.log('new recipe')
   }, []);
 
   const fetchRecipe = () => {
@@ -30,7 +28,7 @@ const GetRecipe = () => {
   const tagsArray = [];
   if (recipe.tag) {
     recipe.tag.forEach((element) => {
-      tagsArray.push(<span>{element}</span>);
+      tagsArray.push(<span>{element} </span>);
     })
   }
 
@@ -53,37 +51,37 @@ const GetRecipe = () => {
 
   const updateReview = (e) => {
     setReview(e.target.value);
-    console.log(review)
   }
 
   const submitReview = (e) => {
     e.preventDefault();
-    console.log(e.target)
-    console.log('review body', e.target.reviewInput.value)
-    console.log('review author', e.target.reviewAuthor.value)
-    setReview(e.target.reviewInput.value);
-    setReviewAuthor(e.target.reviewAuthor.value)
-    console.log('review', review)
-    console.log('reviewAuthor', reviewAuthor)
-    const body = {
-      review: review,
-      name: reviewAuthor,
-      id: recipe._id
+    const reviewBody = e.target.reviewInput.value;
+    const reviewName = e.target.reviewAuthor.value
+    if (reviewBody !== '' && reviewName !== '') {
+      setReview(e.target.reviewInput.value);
+      setReviewAuthor(e.target.reviewAuthor.value)
+      const body = {
+        review: review,
+        name: reviewAuthor,
+        id: recipe._id
+      }
+      console.log('body of review', body)
+      fetch('/api/addReview', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+      }).then(res => res.json()
+        ).then((data) => {
+          setReviewList(data.reviews)
+        })
+      alert('Your review has been added! Thank you!')
+      e.target.reviewInput.value = '';
+      e.target.reviewAuthor.value = '';
     }
-    console.log('body of review', body)
-    fetch('/api/addReview', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(body)
-    })
-    alert('Your review has been added! Thank you!')
-    e.target.reviewInput.value = '';
-    e.target.reviewAuthor.value = '';
-        
   }
 
-  const reviewDisplay = reviewsList ? reviewsList.map(review => {
-    return <Review review={review}/>
+  const reviewDisplay = reviewsList ? reviewsList.map((review, i) => {
+    return <Review key={i} review={review}/>
   }) : '';
 
   
@@ -107,15 +105,18 @@ const GetRecipe = () => {
         <ol>
           {stepsArray}
         </ol>
+        
       </div>
       <div>
         <form action="" id="addReview" onSubmit={submitReview}>
           <h3>Add A Review!</h3>
-          <textarea name="" id="reviewInput" cols="30" rows="10" onInput={(e) => updateReview(e)} placeholder="Write review here!"></textarea>
+          <textarea name="" id="reviewInput" cols="40" rows="8" onInput={(e) => updateReview(e)} placeholder="Write review here!"></textarea>
           <input type="text" id="reviewAuthor" placeholder="What's your name?" onInput={(e) => setReviewAuthor(e.target.value)}/>
           <button type="submit" >Submit Review</button>
         </form>
+        <hr />
       </div>
+        <h2>Community Reviews</h2>
       <div className="review-container">
         {reviewDisplay}
       </div>

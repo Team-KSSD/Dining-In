@@ -49,11 +49,13 @@ button, .submitButton {
   width: 150px;
   border: none;
   border-radius: 4px;
+  padding: .3rem;
   color: white;
   background-color: #347474;
   margin-bottom: 30px;
   font-size: 1em;
 }
+
 
 .submitButton {
   font-size: 1.5em;
@@ -61,11 +63,42 @@ button, .submitButton {
   background-color: #8B8989;
 }
 
+//Hover style for Buttons
+
+button:hover  {
+  height: 40px;
+  width: 150px;
+  // border: 2px dashed red;
+  border-radius: 4px;
+  color: white;
+  background-color: #8B8989;
+  margin-bottom: 30px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #347474;
+  cursor: pointer;
+}
+
+button:active  {
+  height: 40px;
+  width: 150px;
+  // border: 2px dashed red;
+  border-radius: 4px;
+  color: white;
+  background-color: #743434;
+  margin-bottom: 30px;
+  font-size: 1em;
+}
+
 //GET RECIPE and ADD RECIPE //
 .getRecipe, .addRecipe {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: .5rem;
 
   .recipeCard {
     display: flex;
@@ -73,6 +106,7 @@ button, .submitButton {
     align-items: flex-start;
     background-color: whitesmoke;
     padding: 20px;
+    border: 2px solid #347474;
     border-radius: 6px;
     width: 400px;
   }
@@ -81,6 +115,9 @@ button, .submitButton {
   }
   h3 {
     font-size: 16px;
+  }
+  input {
+    margin: .3rem;
   }
 }
 
@@ -143,6 +180,10 @@ button, .submitButton {
   .input-field input {
     padding: 0.8rem;
   }
+
+  input {
+    margin-top: .3rem;
+  }
   
   form .input-field:first-child {
     margin-bottom: 1.5rem;
@@ -200,8 +241,16 @@ button, .submitButton {
   flex-direction: column;
   align-items: flex-start;
   width: 300px;
-  padding: 1rem;
+  padding: .5rem;
+  margin: .7rem;
+  background-color: white;
 
   border: 1px solid darkgreen;
-  border-radius: 5%;
+  border-radius: 2%;
 }
+
+// .review-container {
+//   border: 1px solid black;
+//   border-radius: 5%;
+//   padding: 2rem;
+// }

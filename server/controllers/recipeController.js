@@ -39,14 +39,12 @@ recipeController.addRecipe = async (req, res, next) => {
 
 recipeController.addReview = async (req, res, next) => {
   const {review, name, id} = req.body;
-  // console.log('review body', req.body);
   try {
-    const correctRecipe = await Recipes.find({_id: id})
-    // console.log('found recipe', correctRecipe);
     const newReview = await Recipes.updateOne({_id: id}, {
       $push: {reviews: {body: review, name: name}}
     })
-    // console.log('review', newReview)
+    const correctRecipe = await Recipes.findOne({_id: id})
+    res.locals.recipe = correctRecipe;
     return next();
   } catch(err) {
     return next({body: err, msg: 'Unexpected error while trying to add a review'})

@@ -11,15 +11,15 @@ const AddRecipe = () => {
   //submitting the form and creating a post request
   const submit = (event) => {
     event.preventDefault();
+    //accesses the ingredients in event.target
     const ingredients = [];
     for(let i = 0; i < numOfIngredients; i++) {
-      //currently works when more than one ingredient is put in
-      //need to fix for when there is just one ingredient
       const nextIngredient = new Ingredient(
         event.target.quantity[i].value,
         event.target.unit[i].value,
         event.target.item[i].value
       )
+      //updates ingredients array of objects, which will be passed to req.body
       ingredients.push(nextIngredient);
     }
 
@@ -107,7 +107,7 @@ const AddRecipe = () => {
       <div>
         <input type="text" id="quantity" placeholder={`Quantity (ex: ${Math.floor(Math.random()*10)})`} required></input>;
         <input type="text" id="unit" placeholder={`Unit (ex: ${fakeUnits[Math.floor(Math.random()*10)]})`} required></input>;
-        <input type="text" id="item" placeholder={`Name (ex: ${fakeIngredients[Math.floor(Math.random()*10)]})`} required></input>;
+        <input type="text" id="item" placeholder={`Name (ex: ${fakeIngredients[Math.floor(Math.random()*10)]})`} required></input>
       </div>
     )
   }
