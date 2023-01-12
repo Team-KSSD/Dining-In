@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
+import Review from "./Review";
 
 const GetRecipe = () => {
 
   const [recipe, setRecipe] = useState({});
+  const [review, setReview] = useState('');
+  const [reviewsList, setReviewList] = useState([]);
+  const [reviewAuthor, setReviewAuthor] = useState('');
 
   useEffect(() => {
     fetchRecipe();
@@ -13,8 +17,9 @@ const GetRecipe = () => {
     fetch('/api/random')
       .then(rec => rec.json())
       .then((parsedRecipe) => {
-        console.log('parsed recipe in get recipe.jsx', parsedRecipe)
+        // console.log('parsed recipe in get recipe.jsx', parsedRecipe)
         setRecipe(parsedRecipe);
+        setReviewList(parsedRecipe.reviews)
       })
       .catch(err => console.log('Error fetching random recipe, ERROR: ', err));
   }
@@ -23,7 +28,7 @@ const GetRecipe = () => {
   const tagsArray = [];
   if (recipe.tag) {
     recipe.tag.forEach((element) => {
-      tagsArray.push(<span>{element}</span>);
+      tagsArray.push(<span>{element} </span>);
     })
   }
 
@@ -32,7 +37,7 @@ const GetRecipe = () => {
   if (recipe.ingredients) {
     recipe.ingredients.forEach((ingred) => {
       ingredientsArray.push(<li>{ingred.item}: {ingred.quantity} {ingred.unit}</li>)
-      console.log('ingred', ingred);
+      // console.log('ingred', ingred);
     });
   }
 
@@ -44,6 +49,42 @@ const GetRecipe = () => {
     });
   }
 
+  const updateReview = (e) => {
+    setReview(e.target.value);
+  }
+
+  const submitReview = (e) => {
+    e.preventDefault();
+    const reviewBody = e.target.reviewInput.value;
+    const reviewName = e.target.reviewAuthor.value
+    if (reviewBody !== '' && reviewName !== '') {
+      setReview(e.target.reviewInput.value);
+      setReviewAuthor(e.target.reviewAuthor.value)
+      const body = {
+        review: review,
+        name: reviewAuthor,
+        id: recipe._id
+      }
+      console.log('body of review', body)
+      fetch('/api/addReview', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+      }).then(res => res.json()
+        ).then((data) => {
+          setReviewList(data.reviews)
+        })
+      alert('Your review has been added! Thank you!')
+      e.target.reviewInput.value = '';
+      e.target.reviewAuthor.value = '';
+    }
+  }
+
+  const reviewDisplay = reviewsList ? reviewsList.map((review, i) => {
+    return <Review key={i} review={review}/>
+  }) : '';
+
+  
   return (
     <div>
       <NavBar />
@@ -64,6 +105,20 @@ const GetRecipe = () => {
         <ol>
           {stepsArray}
         </ol>
+        
+      </div>
+      <div>
+        <form action="" id="addReview" onSubmit={submitReview}>
+          <h3>Add A Review!</h3>
+          <textarea name="" id="reviewInput" cols="40" rows="8" onInput={(e) => updateReview(e)} placeholder="Write review here!"></textarea>
+          <input type="text" id="reviewAuthor" placeholder="What's your name?" onInput={(e) => setReviewAuthor(e.target.value)}/>
+          <button type="submit" >Submit Review</button>
+        </form>
+        <hr />
+      </div>
+        <h2>Community Reviews</h2>
+      <div className="review-container">
+        {reviewDisplay}
       </div>
     </div>
     </div>
